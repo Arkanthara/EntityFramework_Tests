@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EspContext>(
-   options => options.UseSqlServer(builder.Configuration.GetConnectionString("myDbConnectionString")));
+   options => options.UseSqlServer(builder.Configuration.GetConnectionString("myDbConnectionStringForLocalConnection")));
 
 
 
