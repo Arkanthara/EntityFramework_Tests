@@ -1542,11 +1542,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\midonnet\\Documents\\Marina\\Marina.csproj",
+      "projectUniqueName": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Marina\\Marina.csproj",
       "projectName": "Marina",
-      "projectPath": "C:\\Users\\midonnet\\Documents\\Marina\\Marina.csproj",
+      "projectPath": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Marina\\Marina.csproj",
       "packagesPath": "C:\\Users\\midonnet\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\midonnet\\Documents\\Marina\\obj\\",
+      "outputPath": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Marina\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\midonnet\\AppData\\Roaming\\NuGet\\NuGet.Config",

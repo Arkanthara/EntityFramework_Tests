@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GzbhaCMh/fKDNJAqRfIJ7uK6i0CE3QN9MzhDuL/aAGSsL0rbJzPt9b1snixgsuTXBrrFTIIEePD7CcLoc4o3tQ==",
+  "dgSpecHash": "zEjSYEXw1GyhI/Lqjo97kiTxxPmY9TK0+lgps1LYQ/0Q9aBKBYkousFE9hKDx9VmfOqVvJdRdyrsb9ZL/wBtSQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\midonnet\\Documents\\Marina\\Marina.csproj",
+  "projectFilePath": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Marina\\Marina.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\midonnet\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\midonnet\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.9\\microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
