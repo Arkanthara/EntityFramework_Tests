@@ -3,6 +3,7 @@ using System.Net.NetworkInformation;
 
 namespace Sinbad.Models
 {
+    // Here we have the column of our table temp_sensor_table
     public class Esp32
     {
         public int Id { get; set; }
