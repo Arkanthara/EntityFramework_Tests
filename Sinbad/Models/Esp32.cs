@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using System.Net.NetworkInformation;
 
 namespace Sinbad.Models
 {
@@ -7,7 +7,7 @@ namespace Sinbad.Models
     {
         public int Id { get; set; }
         public string mac { get; set; }
-        public double temp { get; set; }
+        public float temp { get; set; }
         public DateTime date { get; set; }
     }
 }
