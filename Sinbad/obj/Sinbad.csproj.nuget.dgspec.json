@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\midonnet\\Documents\\Sinbad\\Sinbad.csproj": {}
+    "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Sinbad\\Sinbad.csproj": {}
   },
   "projects": {
-    "C:\\Users\\midonnet\\Documents\\Sinbad\\Sinbad.csproj": {
+    "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Sinbad\\Sinbad.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\midonnet\\Documents\\Sinbad\\Sinbad.csproj",
+        "projectUniqueName": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Sinbad\\Sinbad.csproj",
         "projectName": "Sinbad",
-        "projectPath": "C:\\Users\\midonnet\\Documents\\Sinbad\\Sinbad.csproj",
+        "projectPath": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Sinbad\\Sinbad.csproj",
         "packagesPath": "C:\\Users\\midonnet\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\midonnet\\Documents\\Sinbad\\obj\\",
+        "outputPath": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Sinbad\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\midonnet\\AppData\\Roaming\\NuGet\\NuGet.Config",

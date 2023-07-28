@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "62/zB+nLt41A69mnvhqLOS6mWSRlFO2hrnc9QdEzwc3kdH7Ft3L0t4He/c/AmxkZc/UdY0oTWp5qXSeoT6SyoQ==",
+  "dgSpecHash": "Ps+R8w6sKPh89aHyk4WNtk1mQwhf82r4ijWA48gNjif4yN7dlPF2ShLPcL7hg3CoLaV1E/i0EWikRjIaHvz+Og==",
   "success": true,
-  "projectFilePath": "C:\\Users\\midonnet\\Documents\\Sinbad\\Sinbad.csproj",
+  "projectFilePath": "C:\\Users\\midonnet\\Documents\\entityframework_tests\\Sinbad\\Sinbad.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\midonnet\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\midonnet\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

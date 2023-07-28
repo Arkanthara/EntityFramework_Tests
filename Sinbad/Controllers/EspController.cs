@@ -15,6 +15,7 @@ namespace Sinbad.Controllers
         public EspController(EspContext context)
         {
             _context = context;
+            _context.Database.EnsureCreated();
         }
 
         [HttpGet]
