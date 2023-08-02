@@ -2,7 +2,7 @@
 using Marina.DAL;
 using Marina.DTO;
 using System.Data.Entity;
-
+using System.Net.NetworkInformation;
 
 namespace Marina.Controllers
 {
@@ -16,21 +16,39 @@ namespace Marina.Controllers
             List<Esp32> result;
             using (var context = new Esp32Context())
             {
-                result =  await context.Temp_Table.ToListAsync();
+                result =  await context.temp_sensor_table.ToListAsync();
             }
             return result;
         }
         [HttpPost]
-        public async Task<IActionResult> Post(string mac = "GnorfGnorf", double temperature = 37.5)
+        public async Task<IActionResult> Post(string data)
         {
+            string help = "\n\nHelp\n---------------\nYou must give data in the form MAC;temperature\nMAC: X:X:X:X:X:X with X = two hexadecimal number\ntemperature: X,X with X an integer";
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return BadRequest("Error: data aren't in the good form !" + help);
+            }
+            var item = data.Split(';');
+            if (item.Length != 2)
+            {
+                return BadRequest("Error: data aren't in the good form !" + help);
+            }
             using(var context = new Esp32Context())
             {
-                Esp32 esp32 = new Esp32();
-                esp32.mac = mac;
-                esp32.temp = temperature;
-                esp32.date = DateTime.Now;
-                context.Temp_Table.Add(esp32);
-                await context.SaveChangesAsync();
+                try
+                {
+                    Esp32 esp32 = new Esp32();
+                    PhysicalAddress.Parse(item[0]);
+                    esp32.mac = item[0];
+                    esp32.temp = Double.Parse(item[1]);
+                    esp32.date = DateTime.Now;
+                    context.temp_sensor_table.Add(esp32);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message + help);
+                }
             }
             return Ok("Data where added successfully");
         }
@@ -45,15 +63,15 @@ namespace Marina.Controllers
                 {
                     context.Database.Delete();
                 }
-                return Ok("Database destroy successfully");
+                return Ok("Database has been destroyed successfully");
             }
             Esp32 item_to_delete;
             using (var context = new Esp32Context())
             {
-                item_to_delete = await context.Temp_Table.FindAsync(id);
+                item_to_delete = await context.temp_sensor_table.FindAsync(id);
                 if (item_to_delete != null)
                 {
-                    context.Temp_Table.Remove(item_to_delete);
+                    context.temp_sensor_table.Remove(item_to_delete);
                     await context.SaveChangesAsync();
                 }
 

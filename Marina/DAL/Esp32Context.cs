@@ -5,8 +5,8 @@ namespace Marina.DAL
 {
     public class Esp32Context : DbContext
     {
-        public Esp32Context() :base("name=Test"){ }
+        public Esp32Context() :base("name=TestDocker"){ }
 
-        public DbSet<Esp32> Temp_Table { get; set; }
+        public DbSet<Esp32> temp_sensor_table { get; set; }
     }
 }
