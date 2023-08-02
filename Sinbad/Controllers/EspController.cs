@@ -62,8 +62,7 @@ namespace Sinbad.Controllers
         public async Task<List<Esp32>> GetPeriod(DateTime start, DateTime end)
         {
             return await _context.temp_sensor_table
-                .Where(item
-                => item.date >= start && item.date <= end)
+                .Where(item => item.date >= start && item.date <= end)
                 .ToListAsync();
         }
 
@@ -91,8 +90,7 @@ namespace Sinbad.Controllers
                 year = DateTime.Now.Year;
             }
             return Ok(await _context.temp_sensor_table
-                .Where(item =>
-                item.date >= new DateTime(year, 1, 1) && item.date < new DateTime(year + 1, 1, 1))
+                .Where(item => item.date >= new DateTime(year, 1, 1) && item.date < new DateTime(year + 1, 1, 1))
                 .ToListAsync());
         }
 
