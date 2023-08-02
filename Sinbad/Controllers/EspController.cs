@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sinbad.Context;
 using Sinbad.Models;
@@ -13,6 +12,7 @@ namespace Sinbad.Controllers
     {
         // This attribute will be used for stock temporarily the DbContext
         private readonly EspContext _context;
+        private const int Year = 2023;
 
         // The constructor is used for stock the DbContext and creade Database if it isn't created...
         public EspController(EspContext context)
@@ -21,13 +21,135 @@ namespace Sinbad.Controllers
             _context.Database.EnsureCreated();
         }
 
-        [HttpGet]
-        public async Task<List<Esp32>> Get()
+        // GET - Single data per (paramezer = Id) 
+        // GET - Data per device (parameter = MAC)
+        // GET - Data per period (parameter = start date ; end date)
+        // GET - Time series (per year (parameter = year). per month, per day)
+        // GET - Numbers of disctinct ESP32 
+
+        [HttpGet("Id")]
+        public async Task<Esp32> GetId(int id)
+        {
+            var result = await _context.temp_sensor_table.FindAsync(id);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return new Esp32();
+            }
+        }
+
+        // Function for convert string to DateTime... Used for test functions like GetPeriod
+        [HttpGet("DateTime")]
+        public DateTime GetDateTime(string date)
+        {
+            return DateTime.Parse(date);
+        }
+
+        // Function for return all lines which have the mac address given
+        [HttpGet("MAC")]
+        public List<Esp32> GetMAC(string mac)
+        {
+            return _context.temp_sensor_table
+                .Where(item => item.mac == mac)
+                .ToList();
+        }
+
+        // Function for return all lines which have their date between start and end (include)
+        [HttpGet("Period")]
+        public List<Esp32> GetPeriod(DateTime start, DateTime end)
+        {
+            return _context.temp_sensor_table
+                .Where(item
+                => item.date >= start && item.date <= end)
+                .ToList();
+        }
+
+        // Function for return the number of MAC address used
+        [HttpGet("MACNumber")]
+        public int GetMACNumber()
+        {
+            return _context.temp_sensor_table.Select(item => item.mac).Distinct().Count();
+        }
+
+        // Function for return all lines of our table
+        [HttpGet("All")]
+        public async Task<List<Esp32>> GetAll()
         {
             // Here we take all data from table temp_sensor_table, and we print result
             return await _context.temp_sensor_table.ToListAsync();
         }
 
+        // Function for return all datas received in the specific year
+        [HttpGet("Year")]
+        public async Task<IActionResult> GetYear(int year = -1)
+        {
+            if (year == -1)
+            {
+                year = DateTime.Now.Year;
+            }
+            return Ok(await _context.temp_sensor_table
+                .Where(item =>
+                item.date >= new DateTime(year, 1, 1) && item.date < new DateTime(year + 1, 1, 1))
+                .ToListAsync());
+        }
+
+        // Function for return all datas received in the specific month
+        [HttpGet("Month")]
+        public async Task<IActionResult> GetMonth(int month = -1, int year = -1)
+        {
+            if (year == -1)
+            {
+                year = DateTime.Now.Year;
+            }
+            if (month == -1)
+            {
+                month = DateTime.Now.Month;
+            }
+            if (month == 12)
+            {
+                return Ok(await _context.temp_sensor_table
+                    .Where(item => item.date >= new DateTime(year, month, 1) && item.date < new DateTime(year + 1, 1, 1))
+                    .ToListAsync());
+            }
+            return Ok(await _context.temp_sensor_table
+                .Where (item => item.date >= new DateTime(year, month, 1) && item.date < new DateTime(year, month + 1, 1))
+                .ToListAsync());
+        }
+
+        // Function for return all datas received in the specific day
+        [HttpGet("Day")]
+        public async Task<IActionResult> GetDay(int day = -1, int month = -1, int year = -1)
+        {
+            if (month == -1)
+            {
+                month = DateTime.Now.Month;
+            }
+            if (year == -1)
+            {
+                year = DateTime.Now.Year;
+            }
+            if (day == -1)
+            {
+                day = DateTime.Now.Day;
+            }
+            DateTime date;
+            try
+            {
+                date = new DateTime(year, month, day);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(await _context.temp_sensor_table
+                .Where(item => item.date >= new DateTime(year, month, day, 0, 0, 0) && item.date <= new DateTime(year, month, day, 23, 59, 59, 999))
+                .ToListAsync());
+        }
+
+        // Function for add new line to our table
         [HttpPost]
         public async Task<IActionResult> Post(string data)
         {
@@ -73,6 +195,7 @@ namespace Sinbad.Controllers
             return Ok("Datas have been inserted successfully to the table");
         }
 
+        // Function for delete the database or a specified line
         [HttpDelete]
         public async Task<IActionResult> Delete(int id = 0, bool cleanDataBase = false)
         {
