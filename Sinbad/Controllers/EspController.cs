@@ -25,8 +25,7 @@ namespace Sinbad.Controllers
         public async Task<List<Esp32>> Get()
         {
             // Here we take all data from table temp_sensor_table, and we print result
-            var result = await _context.temp_sensor_table.ToListAsync();
-            return result;
+            return await _context.temp_sensor_table.ToListAsync();
         }
 
         [HttpPost]
@@ -49,7 +48,7 @@ namespace Sinbad.Controllers
             }
             // We create new Esp32 instance, which would be used for insert new line in our database
             Esp32 newdata = new Esp32();
-            // We try to parse float and address mac. If it didn't work, it means that the data aren't in good form...
+            // We try to parse float and mac address. If it didn't work, it means that the data aren't in good form...
             // And we complete the instance of Esp32 if no problem comes
             try
             {

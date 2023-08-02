@@ -1,7 +1,5 @@
 using Sinbad.Context;
-using Sinbad.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 
 
 
