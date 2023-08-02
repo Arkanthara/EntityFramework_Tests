@@ -4,6 +4,12 @@ using Sinbad.Context;
 using Sinbad.Models;
 using System.Net.NetworkInformation;
 
+// GET - Single data per (paramezer = Id) 
+// GET - Data per device (parameter = MAC)
+// GET - Data per period (parameter = start date ; end date)
+// GET - Time series (per year (parameter = year). per month, per day)
+// GET - Numbers of disctinct ESP32 
+
 namespace Sinbad.Controllers
 {
     [Route("api/[controller]")]
@@ -12,7 +18,6 @@ namespace Sinbad.Controllers
     {
         // This attribute will be used for stock temporarily the DbContext
         private readonly EspContext _context;
-        private const int Year = 2023;
 
         // The constructor is used for stock the DbContext and creade Database if it isn't created...
         public EspController(EspContext context)
@@ -21,23 +26,18 @@ namespace Sinbad.Controllers
             _context.Database.EnsureCreated();
         }
 
-        // GET - Single data per (paramezer = Id) 
-        // GET - Data per device (parameter = MAC)
-        // GET - Data per period (parameter = start date ; end date)
-        // GET - Time series (per year (parameter = year). per month, per day)
-        // GET - Numbers of disctinct ESP32 
-
+        // Function for return the line with the id given
         [HttpGet("Id")]
-        public async Task<Esp32> GetId(int id)
+        public async Task<IActionResult> GetId(int id)
         {
             var result = await _context.temp_sensor_table.FindAsync(id);
             if (result != null)
             {
-                return result;
+                return Ok(result);
             }
             else
             {
-                return new Esp32();
+                return BadRequest("Line with id " + id.ToString() + " not found");
             }
         }
 
@@ -50,21 +50,21 @@ namespace Sinbad.Controllers
 
         // Function for return all lines which have the mac address given
         [HttpGet("MAC")]
-        public List<Esp32> GetMAC(string mac)
+        public async Task<List<Esp32>> GetMAC(string mac)
         {
-            return _context.temp_sensor_table
+            return await _context.temp_sensor_table
                 .Where(item => item.mac == mac)
-                .ToList();
+                .ToListAsync();
         }
 
         // Function for return all lines which have their date between start and end (include)
         [HttpGet("Period")]
-        public List<Esp32> GetPeriod(DateTime start, DateTime end)
+        public async Task<List<Esp32>> GetPeriod(DateTime start, DateTime end)
         {
-            return _context.temp_sensor_table
+            return await _context.temp_sensor_table
                 .Where(item
                 => item.date >= start && item.date <= end)
-                .ToList();
+                .ToListAsync();
         }
 
         // Function for return the number of MAC address used
