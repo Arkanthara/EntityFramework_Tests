@@ -18,4 +18,4 @@ First, I tested EntityFramework and Microsoft.EntityFramework.Core:
 ## Server
 * The server is in C-sharp
 * There are get methods for see datas, a post method, and a delete method for destroy either the database or a row
-* Connection to the database is made in Program.cs with connecitonStrings which is in appsettings.json
+* Connection to the database is made in Program.cs with connectionStrings which is in appsettings.json
