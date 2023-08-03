@@ -149,7 +149,7 @@ namespace Sinbad.Controllers
 
         // Function for add new line to our table
         [HttpPost]
-        public async Task<IActionResult> Post(string data)
+        public async Task<IActionResult> Post([FromBody] string data)
         {
             // Here we define the instruction message
             string help = "\n\nHelp\n------------\nYou must give data in the form MAC;temperature\nMAC is in the form: xx:xx:xx:xx:xx:xx with x, an hexadecimal number\ntemperature is in the form float: x,x or x with x an integer";
@@ -195,10 +195,19 @@ namespace Sinbad.Controllers
 
         // Function for delete the database or a specified line
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id = 0, bool cleanDataBase = false)
+        public async Task<IActionResult> Delete(int id = 0, [FromBody] string cleanDataBase = "false")
         {
+            bool clean;
+            try
+            {
+                clean = bool.Parse(cleanDataBase);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + "\n\nHelp\n----------\nEither you give the id of item to delete (int)\nor you give 'true' string for delete Database(it cleans all datas)");
+            }
             // If value true is given, it means that the user want to delete the database. So we delete the database.
-            if (cleanDataBase)
+            if (clean)
             {
                 _context.Database.EnsureDeleted();
                 await _context.SaveChangesAsync();
@@ -210,7 +219,7 @@ namespace Sinbad.Controllers
             // If we don't find item with id given, we indicate it to the client
             if (item_to_remove == null)
             {
-                return BadRequest("Bad Request...\n\nPrehaps, the item with the id given doesn't exist in the database\n\nHelp\n----------\nEither you give the id of item to delete (int)\nor you give true value for delete Database(it cleans all datas)");
+                return BadRequest("Bad Request...\n\nPrehaps, the item with the id given doesn't exist in the database\n\nHelp\n----------\nEither you give the id of item to delete (int)\nor you give 'true' string for delete Database(it cleans all datas)");
             }
 
             // Else we remove our item
