@@ -12,6 +12,9 @@ namespace Sinbad.Context
         // This is a table with column like the attributes of Esp32
         public DbSet<Esp32> temp_sensor_table { get; set; }
 
+        // This is a table with mac and id
+        public DbSet<MAC> mac_table { get; set; }
+
  
     }
 }

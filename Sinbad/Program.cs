@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 // Here we add new services: it's a dbcontext. So we can use dependency injection because when we use a service,
 // the DbContext will be given to our service.
 builder.Services.AddDbContext<EspContext>(
-   options => options.UseSqlServer(builder.Configuration.GetConnectionString("myDbConnectionString")));
+   options => options.UseSqlServer(builder.Configuration.GetConnectionString("myDbConnectionStringForLocalConnection")));
 
 
 
